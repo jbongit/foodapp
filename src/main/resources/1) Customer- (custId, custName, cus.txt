@@ -29,3 +29,7 @@ Vendor can add, update,delete foodmenu.
 
 Delivery boy can get all the deliveries made by him using his Id.
 
+
+Admin can fetch,create,update delete customers by Id 
+admin can fetch all customers 
+
