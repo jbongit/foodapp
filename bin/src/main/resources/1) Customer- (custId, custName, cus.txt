@@ -1,0 +1,31 @@
+1) Customer- (custId, custName, custAddress, custEmailId, custMobileno,role)
+
+2) Vendor- ( vendorId,vendorName,vendorAddress, vendorEmailId,vendorMobileNo,role)
+
+3) Admin  (adminId,adminName,adminEmailId, adminMobileNo,role)
+
+4) Order( orderId, vendorId, custId,productId)
+
+5)Product( productId,productName, productDesc,productPrice,productCategory)
+
+6) Cart  ( custId,productId,productName, totalAmount)
+
+
+
+
+Customer can create, update, delete, get their profiles.
+Customer can search for the Vendor using Vendor name, city name.
+Customer can see the foodmenu. User can get the food items based on Meal type or Cuisine type.
+Customer can add/remove items to/from the cart. User can get all the items of the cart.
+Customer can place or cancel the order. User can get all the orders ordered by him/her.
+Customer can apply the coupons. User can get the detailed bill containing tax details.
+Customer can made a payment using different modes of payment - credit card, wallet, etc.
+Customer can get the order status anytime. Success, Out for Delivery, Delivered, etc.
+
+
+
+Vendor can register themselves.
+Vendor can add, update,delete foodmenu.
+
+Delivery boy can get all the deliveries made by him using his Id.
+
