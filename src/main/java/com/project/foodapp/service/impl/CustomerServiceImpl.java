@@ -1,16 +1,20 @@
 package com.project.foodapp.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import com.project.foodapp.exceptions.CartItemNotFoundException;
 import com.project.foodapp.exceptions.CustomerNotFoundException;
+import com.project.foodapp.exceptions.IllegalArgumentException;
 import com.project.foodapp.exceptions.ProductNotFoundException;
+import com.project.foodapp.model.Address;
 import com.project.foodapp.model.CartItem;
 import com.project.foodapp.model.Customer;
+import com.project.foodapp.model.CustomerDTO;
 import com.project.foodapp.model.Product;
 import com.project.foodapp.repository.CartRepo;
 import com.project.foodapp.repository.CustomerRepo;
@@ -31,7 +35,26 @@ public class CustomerServiceImpl implements CustomerService{
 	private CartRepo cartRepo;
 
 	@Override
-	public Customer createCustomer(Customer customer) {
+	public Customer createCustomer(CustomerDTO customerDTO,BindingResult bindingResult) throws IllegalArgumentException {
+		if(bindingResult.hasErrors()) {
+			List<FieldError> errors = bindingResult.getFieldErrors();
+			String errorMessage="";
+			for (FieldError error : errors) {
+				errorMessage+=error.getDefaultMessage()+"\n";
+			}
+			throw new IllegalArgumentException(errorMessage);
+		}
+		
+		Customer existingCustomer=customerRepo.findByCustEmailId(customerDTO.getCustEmailId());
+		
+		if(existingCustomer!=null) {
+			throw new IllegalArgumentException("Customer Email Id Already Exist");
+		}
+		
+		Address address=Address.builder().houseNo(customerDTO.getHouseNo()).area(customerDTO.getArea()).city(customerDTO.getCity()).state(customerDTO.getState()).pincode(customerDTO.getPincode()).latitude(customerDTO.getLatitude()).longitude(customerDTO.getLongitude()).build();
+		
+		Customer customer=Customer.builder().custName(customerDTO.getCustName()).custEmailId(customerDTO.getCustEmailId()).custMobileno(customerDTO.getCustMobileno()).custPassword(customerDTO.getCustPassword()).custAddress(address).role("Customer").build();
+		
 		return customerRepo.save(customer);
 	}
 
@@ -42,11 +65,29 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public Customer updateCustomer(Long id, Customer updatedCustomer) throws CustomerNotFoundException {
-		Customer existingCustomer=customerRepo.findById(id).orElseThrow(()->new CustomerNotFoundException(id));
+	public Customer updateCustomer(Long id,CustomerDTO updatedCustomer,BindingResult bindingResult) throws CustomerNotFoundException, IllegalArgumentException {
+		if (bindingResult.hasErrors()) {
+			List<FieldError> errors = bindingResult.getFieldErrors();
+			String errorMessage = "";
+			for (FieldError error : errors) {
+				errorMessage += error.getDefaultMessage() + "\n";
+			}
+			throw new IllegalArgumentException(errorMessage);
+		}
+		Customer existingCustomer = customerRepo.findById(id)
+				.orElseThrow(() -> new CustomerNotFoundException(id));
+		
 		existingCustomer.setCustName(updatedCustomer.getCustName());
 		existingCustomer.setCustEmailId(updatedCustomer.getCustEmailId());
-		existingCustomer.setCustAddress(updatedCustomer.getCustAddress());
+		Address address = existingCustomer.getCustAddress();
+		
+		address.setHouseNo(updatedCustomer.getHouseNo());
+		address.setArea(updatedCustomer.getArea());
+		address.setCity(updatedCustomer.getCity());
+		address.setState(updatedCustomer.getState());
+		address.setPincode(updatedCustomer.getPincode());
+		
+		existingCustomer.setCustAddress(address);
 		existingCustomer.setCustMobileno(updatedCustomer.getCustMobileno());
 		return customerRepo.save(existingCustomer);
 	}
@@ -64,7 +105,11 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public CartItem addToCart(Long quantity,Long custId,Long productId) throws ProductNotFoundException, CartItemNotFoundException {
+	public CartItem addToCart(Long quantity,Long custId,Long productId) throws ProductNotFoundException, CartItemNotFoundException, CustomerNotFoundException {
+		if(fetchCustomer(custId)==null) {
+			throw new CustomerNotFoundException(custId);
+		}
+		
 		Product product=productRepo.findById(productId).orElseThrow(()->new ProductNotFoundException(productId));
 		
 		if(cartRepo.findByProductIdandCustId(custId, productId).isPresent()) {

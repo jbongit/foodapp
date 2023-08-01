@@ -8,20 +8,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-public class Vendor {
+public class Address {
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private long vendorId;
-	private String vendorName;
-	private String vendorEmail;
-	private String vendorAddress;
-	private String role;
-	
-	
-
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	private String houseNo;
+	private String area;
+	private String city;
+	private String state;
+	private String pincode;
+	private double latitude;
+	private double longitude;
 }

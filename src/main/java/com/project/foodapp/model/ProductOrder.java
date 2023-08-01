@@ -19,6 +19,7 @@ public class ProductOrder {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderId;
 	private Long custId;
-	private Long vendorId;
+	private Long dpId;
+	private Long restId;
 	private Long productId;
 }

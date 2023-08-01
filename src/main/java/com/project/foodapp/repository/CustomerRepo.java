@@ -6,4 +6,6 @@ import com.project.foodapp.model.Customer;
 
 public interface CustomerRepo extends JpaRepository<Customer, Long>{
 
+	Customer findByCustEmailId(String custEmailId);
+
 }

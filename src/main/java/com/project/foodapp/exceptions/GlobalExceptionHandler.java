@@ -24,4 +24,23 @@ public class GlobalExceptionHandler {
 		String message = ex.getMessage();
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
 	}
+	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<String> IllegalArgumentException(IllegalArgumentException ex) {
+		String message = ex.getMessage();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+	}
+	
+	@ExceptionHandler(RestaurantNotFoundException.class)
+	public ResponseEntity<String> RestaurantNotFound(RestaurantNotFoundException ex) {
+		String message = ex.getMessage();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+	}
+	
+
+	@ExceptionHandler(DeliveryPartnerNotFoundException.class)
+	public ResponseEntity<String> DeliveryPartnerNotFound(DeliveryPartnerNotFoundException ex) {
+		String message = ex.getMessage();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+	}
 }

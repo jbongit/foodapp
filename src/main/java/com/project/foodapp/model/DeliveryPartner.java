@@ -23,31 +23,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Customer {
-
+public class DeliveryPartner {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long custId;
+	private Long dpId;
 
-	private String custName;
+	private String dpName;
 
 	@Column(unique = true)
-	private String custEmailId;
+	private String dpEmailId;
 
 	@OneToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="address_id")
-	private Address custAddress;
+	private Address dpAddress;
 
-	private String custMobileno;
+	private String dpMobileno;
 
-	private String custPassword;
+	private String dpPassword;
 
 	@NotBlank(message = "Role Can Not Be Empty !!")
 	private String role;
 
-	@OneToMany(mappedBy = "custId",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	private List<CartItem> cartItems;
-	
-	@OneToMany(mappedBy = "custId",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "dpId",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	private List<ProductOrder> orderItems;
 }

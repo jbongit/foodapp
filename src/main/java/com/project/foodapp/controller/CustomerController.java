@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.foodapp.exceptions.CartItemNotFoundException;
 import com.project.foodapp.exceptions.CustomerNotFoundException;
+import com.project.foodapp.exceptions.IllegalArgumentException;
 import com.project.foodapp.exceptions.ProductNotFoundException;
 import com.project.foodapp.model.CartItem;
 import com.project.foodapp.model.Customer;
+import com.project.foodapp.model.CustomerDTO;
 import com.project.foodapp.model.Product;
 import com.project.foodapp.service.CustomerService;
 import com.project.foodapp.service.ProductService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/customer")
@@ -38,11 +43,6 @@ public class CustomerController {
 		return ResponseEntity.ok().body(customerService.getAllCustomers());
 	}
 	
-	@PostMapping
-	public ResponseEntity<Customer> createCustomerProfile(@RequestBody Customer customer) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createCustomer(customer));
-	}
-	
 	@GetMapping("/{id}")
 	public ResponseEntity<Customer> fetchCustomerById(@PathVariable("id") Long id) throws CustomerNotFoundException {
 		Customer customer = customerService.fetchCustomer(id);
@@ -50,8 +50,8 @@ public class CustomerController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Customer> updateCustomer(@PathVariable("id") Long id,@RequestBody Customer customer) throws CustomerNotFoundException{
-		Customer existingCustomer = customerService.updateCustomer(id,customer);
+	public ResponseEntity<Customer> updateCustomer(@PathVariable("id") Long id,@RequestBody @Valid CustomerDTO customer,BindingResult bindingResult) throws CustomerNotFoundException, IllegalArgumentException{
+		Customer existingCustomer = customerService.updateCustomer(id,customer,bindingResult);
 		return ResponseEntity.status(HttpStatus.OK).body(existingCustomer);
 	}
 	
@@ -67,7 +67,7 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/{custId}/product/{productId}/addToCart")
-	public ResponseEntity<CartItem> addToCart(@RequestParam("quantity") Long quantity,@PathVariable("custId") Long custId,@PathVariable("productId") Long productId) throws ProductNotFoundException, CartItemNotFoundException{
+	public ResponseEntity<CartItem> addToCart(@RequestParam("quantity") Long quantity,@PathVariable("custId") Long custId,@PathVariable("productId") Long productId) throws ProductNotFoundException, CartItemNotFoundException, CustomerNotFoundException{
 		return ResponseEntity.ok().body(customerService.addToCart(quantity,custId,productId));
 	}
 	
