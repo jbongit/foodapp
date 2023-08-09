@@ -1,5 +1,6 @@
 package com.project.foodapp.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +21,12 @@ public interface CartRepo extends JpaRepository<CartItem, Long>{
 	
 	@Query("SELECT c FROM CartItem c where c.custId= :customerId AND c.product.productId= :productId")
 	Optional<CartItem> findByProductIdandCustId(@Param("customerId")Long custId,@Param("productId")Long productId);
+
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM CartItem c where c.product.productId= :productId")
+	void deleteByProductId(@Param("productId")Long productId);
+	
+	List<CartItem> findByCustId(Long custId);
 
 }

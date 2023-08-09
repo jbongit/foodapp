@@ -133,6 +133,11 @@ public class CustomerServiceImpl implements CustomerService{
 		CartItem existingCartItem=cartRepo.findByProductIdandCustId(custId,productId).orElseThrow(()->new CartItemNotFoundException(productId));
 		existingCartItem.setQuantity(existingCartItem.getQuantity()+quantity);
 		return cartRepo.save(existingCartItem);
+	}
+
+	@Override
+	public List<CartItem> getCartItemsByCustId(Long custId) throws CartItemNotFoundException {
+		return cartRepo.findByCustId(custId);
 	}	
 	
 }

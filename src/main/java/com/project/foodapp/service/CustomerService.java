@@ -21,6 +21,7 @@ public interface CustomerService {
 	public Customer deleteCustomer(Long id) throws CustomerNotFoundException;
 	public List<Customer> getAllCustomers();
 	
+	public List<CartItem> getCartItemsByCustId(Long custId) throws CartItemNotFoundException;
 	public CartItem addToCart(Long quantity,Long custId,Long productId) throws ProductNotFoundException, CartItemNotFoundException, CustomerNotFoundException;
 	public CartItem removeFromCartByProductId(Long custId, Long productId) throws CartItemNotFoundException;
 	public CartItem updateCartItemQuantity(Long quantity, Long custId, Long productId) throws CartItemNotFoundException;

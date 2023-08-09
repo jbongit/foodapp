@@ -43,4 +43,10 @@ public class GlobalExceptionHandler {
 		String message = ex.getMessage();
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
 	}
+	
+	@ExceptionHandler(ProductRestaurantNotFoundException.class)
+	public ResponseEntity<String> ProductRestaurantNotFoundException(ProductRestaurantNotFoundException ex) {
+		String message = ex.getMessage();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+	}
 }

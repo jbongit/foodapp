@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.project.foodapp.exceptions.CartItemNotFoundException;
 import com.project.foodapp.exceptions.CustomerNotFoundException;
@@ -29,8 +30,9 @@ import com.project.foodapp.service.ProductService;
 
 import jakarta.validation.Valid;
 
-@RestController
+@Controller
 @RequestMapping("/customer")
+@CrossOrigin("http://localhost:3000")
 public class CustomerController {
 	@Autowired
 	CustomerService customerService;
@@ -66,6 +68,11 @@ public class CustomerController {
 		return ResponseEntity.ok(productService.getAllProducts());
 	}
 	
+	@GetMapping("/{custId}/cartItems")
+	public ResponseEntity<List<CartItem>> getCartItems(@PathVariable("custId") Long custId) throws CartItemNotFoundException{
+		return ResponseEntity.ok().body(customerService.getCartItemsByCustId(custId));
+	}
+	
 	@PostMapping("/{custId}/product/{productId}/addToCart")
 	public ResponseEntity<CartItem> addToCart(@RequestParam("quantity") Long quantity,@PathVariable("custId") Long custId,@PathVariable("productId") Long productId) throws ProductNotFoundException, CartItemNotFoundException, CustomerNotFoundException{
 		return ResponseEntity.ok().body(customerService.addToCart(quantity,custId,productId));
@@ -75,6 +82,5 @@ public class CustomerController {
 	public ResponseEntity<CartItem> removeFromCartById(@PathVariable("custId") Long custId,@PathVariable("productId") Long productId) throws CartItemNotFoundException{
 		return ResponseEntity.ok().body(customerService.removeFromCartByProductId(custId, productId));
 	}
-	
 	
 }

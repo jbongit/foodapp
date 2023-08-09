@@ -9,3 +9,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    
+stripe:
+  apikey: sk_test_51NYpX6SCTsCpWm2mBuXULonumq3qqKU4ofNwAPGCkzXPx8pDObwgqCivc1HK1PiFM1Ytf3X2Zr9eMo94BumisURX001DlA3MYt
+  publickey: pk_test_51NYpX6SCTsCpWm2mI4iPzvn69xlAOz3PMKsRaAkMUER5mDzdgfb6Y1kz5ziKYSKJ0Ohu1d2xGVRKE8lzB1kELS0H00SPRFSvkl
