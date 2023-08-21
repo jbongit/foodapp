@@ -34,7 +34,6 @@ public class RegistrationController {
 	@Autowired
 	DeliveryPartnerService deliveryPartnerService;
 	
-	
 	@PostMapping("/customer")
 	public ResponseEntity<Customer> createCustomerProfile(@RequestBody @Valid CustomerDTO customer,BindingResult bindingResult) throws IllegalArgumentException {
 		return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createCustomer(customer,bindingResult));

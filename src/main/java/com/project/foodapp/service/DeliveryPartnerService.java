@@ -8,6 +8,7 @@ import com.project.foodapp.exceptions.IllegalArgumentException;
 import com.project.foodapp.exceptions.DeliveryPartnerNotFoundException;
 import com.project.foodapp.model.DeliveryPartner;
 import com.project.foodapp.model.DeliveryPartnerDTO;
+import com.project.foodapp.model.RegistrationDTO;
 
 import jakarta.validation.Valid;
 
@@ -17,4 +18,5 @@ public interface DeliveryPartnerService {
 	public DeliveryPartner updateDeliveryPartner(Long id,DeliveryPartnerDTO updatedDeliveryPartner,BindingResult bindingResult) throws DeliveryPartnerNotFoundException, IllegalArgumentException;
 	public DeliveryPartner deleteDeliveryPartner(Long id) throws DeliveryPartnerNotFoundException;
 	public List<DeliveryPartner> getAllDeliveryPartners();
+	RegistrationDTO findByEmailId(String emailId);
 }

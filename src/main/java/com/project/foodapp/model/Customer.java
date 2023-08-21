@@ -49,5 +49,5 @@ public class Customer {
 	private List<CartItem> cartItems;
 	
 	@OneToMany(mappedBy = "custId",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	private List<ProductOrder> orderItems;
+	private List<Order> orderItems;
 }

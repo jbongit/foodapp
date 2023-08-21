@@ -45,5 +45,5 @@ public class DeliveryPartner {
 	private String role;
 
 	@OneToMany(mappedBy = "dpId",cascade = CascadeType.ALL,fetch=FetchType.EAGER)
-	private List<ProductOrder> orderItems;
+	private List<Order> orderItems;
 }

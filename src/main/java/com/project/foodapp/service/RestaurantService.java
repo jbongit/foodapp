@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 
 import com.project.foodapp.exceptions.IllegalArgumentException;
 import com.project.foodapp.exceptions.RestaurantNotFoundException;
+import com.project.foodapp.model.RegistrationDTO;
 import com.project.foodapp.model.Restaurant;
 import com.project.foodapp.model.RestaurantDTO;
 
@@ -17,4 +18,5 @@ public interface RestaurantService {
 	public Restaurant updateRestaurant(Long id,RestaurantDTO updatedRestaurant,BindingResult bindingResult) throws RestaurantNotFoundException, IllegalArgumentException;
 	public Restaurant deleteRestaurant(Long id) throws RestaurantNotFoundException;
 	public List<Restaurant> getAllRestaurants();
+	RegistrationDTO findByEmailId(String emailId);
 }
