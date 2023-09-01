@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.project.foodapp.exceptions.CartItemNotFoundException;
+import com.project.foodapp.exceptions.CustomerNotFoundException;
 import com.project.foodapp.model.CartItem;
 import com.project.foodapp.model.CreatePayment;
 import com.project.foodapp.model.CreatePaymentResponse;
 import com.project.foodapp.repository.CartRepo;
+import com.project.foodapp.service.NotificationService;
 import com.project.foodapp.service.OrderService;
 import com.project.foodapp.service.PaymentStripeService;
 import com.stripe.Stripe;
@@ -29,6 +31,9 @@ public class PaymentStripeServiceImpl implements PaymentStripeService{
 		
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private NotificationService notificationService;
 	
 	@Value("${stripe.apikey}")
 	private String stripeApiKey;
@@ -62,9 +67,10 @@ public class PaymentStripeServiceImpl implements PaymentStripeService{
 	}
 
 	@Override
-	public void processPayment(String paymentStatus,Long custId) throws CartItemNotFoundException {
+	public void processPayment(String paymentStatus,Long custId) throws CartItemNotFoundException, CustomerNotFoundException {
 		if(paymentStatus.equals("succeeded")) {
 			orderService.addOrder(custId);
+			notificationService.sendNotificationToCustomer(custId,"Congratulations , Your Order Placed Successfully");
 			System.out.println("Payment Success \n"+custId);
 		}else {
 			System.out.println("Payment Failed");

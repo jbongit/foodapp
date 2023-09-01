@@ -39,7 +39,7 @@ public class AuthController {
 
 	@GetMapping("/login")
 	public void getLoginPage(HttpServletResponse response) throws IOException {
-		response.sendRedirect("http://localhost:3000/login");
+		response.sendRedirect("http://localhost:3000");
 	}
 
 	@PostMapping("/login")
@@ -61,7 +61,6 @@ public class AuthController {
 	private void authenticate(String username, String password) throws Exception {
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
 				password);
-
 		try {
 			this.authenticationManager.authenticate(authenticationToken);
 		} catch (BadCredentialsException e) {
