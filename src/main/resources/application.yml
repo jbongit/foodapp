@@ -13,9 +13,18 @@ spring:
     bootstrap-servers: localhost:9092
     consumer:
       group-id: notification-consumer-group 
+  mail:
+    host: smtp-relay.sendinblue.com
+    port: 587
+    username: jalajtechy12345@gmail.com
+    password: ENTER MAIL SENDER PASSWORD
+    protocol: smtp
+    properties:
+            mail:
+              auth: true
+              startls: true
+              enable: true
     
 stripe:
-  apikey: ENTER_YOUR_SECRET_KEY
-  publickey: ENTER_YOUR_PUBLIC_KEY
-
-  
+  apikey: ENTER SECRET API KEY
+  publickey: ENTER PUBLIC API KEY

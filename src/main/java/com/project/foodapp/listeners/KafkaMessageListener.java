@@ -25,7 +25,7 @@ public class KafkaMessageListener {
 	@KafkaListener(topics="user-topic",groupId="notification-consumer-group")
 	public void userListen(@Payload String message) {
 		try {
-			Thread.sleep(1000L);
+			Thread.sleep(5000L);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

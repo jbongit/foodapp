@@ -24,9 +24,11 @@ import com.project.foodapp.exceptions.ProductNotFoundException;
 import com.project.foodapp.model.CartItem;
 import com.project.foodapp.model.Customer;
 import com.project.foodapp.model.CustomerDTO;
+import com.project.foodapp.model.Order;
 import com.project.foodapp.model.Product;
 import com.project.foodapp.service.CartItemService;
 import com.project.foodapp.service.CustomerService;
+import com.project.foodapp.service.OrderService;
 import com.project.foodapp.service.ProductService;
 
 import jakarta.validation.Valid;
@@ -42,6 +44,9 @@ public class CustomerController {
 	
 	@Autowired
 	CartItemService cartItemService;
+	
+	@Autowired
+	OrderService orderService;
 	
 	@GetMapping
 	public ResponseEntity<List<Customer>> getAllCustomers(){
@@ -90,6 +95,12 @@ public class CustomerController {
 	@PreAuthorize("hasAuthority('Customer') and #custId==authentication.principal.id")
 	public ResponseEntity<CartItem> removeFromCartById(@PathVariable("custId") Long custId,@PathVariable("productId") Long productId) throws CartItemNotFoundException{
 		return ResponseEntity.ok().body(cartItemService.removeFromCartByProductId(custId, productId));
+	}
+	
+	@GetMapping("/{custId}/orders")
+	@PreAuthorize("hasAuthority('Customer') and #custId==authentication.principal.id")
+	public ResponseEntity<List<Order>> getOrderItems(@PathVariable("custId") Long custId) throws CartItemNotFoundException{
+		return ResponseEntity.ok().body(orderService.getAllOrdersByCustId(custId));
 	}
 	
 }

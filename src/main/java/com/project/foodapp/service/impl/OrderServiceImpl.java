@@ -24,9 +24,7 @@ public class OrderServiceImpl implements OrderService{
 	
 	@Override
 	public List<Order> getAllOrdersByCustId(Long custId) throws CartItemNotFoundException {
-		
-		
-		return null;
+		return orderRepo.findByCustId(custId);
 	}
 
 	@Override

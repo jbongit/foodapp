@@ -70,6 +70,7 @@ public class PaymentStripeServiceImpl implements PaymentStripeService{
 	public void processPayment(String paymentStatus,Long custId) throws CartItemNotFoundException, CustomerNotFoundException {
 		if(paymentStatus.equals("succeeded")) {
 			orderService.addOrder(custId);
+			System.out.println("Hi");
 			notificationService.sendNotificationToCustomer(custId,"Congratulations , Your Order Placed Successfully");
 			System.out.println("Payment Success \n"+custId);
 		}else {

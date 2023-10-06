@@ -48,7 +48,7 @@ public class AuthController {
 		CustomUserDetails userDetails = (CustomUserDetails)this.userDetailsService.loadUserByUsername(request.getUsername());
 		String token = this.jwtHelper.generateToken(userDetails);
 		System.out.println(token);
-		RegistrationDTO user = RegistrationDTO.builder().userEmailId(userDetails.getUsername())
+		RegistrationDTO user = RegistrationDTO.builder().userName(userDetails.getName()).userEmailId(userDetails.getUsername())
 				.userPassword(userDetails.getPassword()).userId(userDetails.getId()).build();
 
 		JwtAuthResponse response = new JwtAuthResponse();
