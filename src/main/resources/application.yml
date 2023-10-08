@@ -16,8 +16,8 @@ spring:
   mail:
     host: smtp-relay.sendinblue.com
     port: 587
-    username: ENTER USERNAME
-    password: ENTER PASSWORD
+    username: ENTER YOUR MAIL USERNAME
+    password: ENTER YOUR MAIL PASSWORD
     protocol: smtp
     properties:
             mail:
