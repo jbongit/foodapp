@@ -1,0 +1,31 @@
+#.Open the command prompt in terminal----->change the directory to the location of kafka(in every terminal)----->
+
+1) --------------:For start ZOOKEEPER:--------------
+	.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+2) --------------:For start KAFKA:--------------
+	.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+3) --------------:For creating TOPIC:--------------
+	.\bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic demo
+
+4) --------------:For creating PRODUCER:-----------
+	.\bin\windows\kafka-console-producer.bat --bootstrap-server localhost:9092 --topic demo
+
+5)  --------------:For creating CONSUMER:--------------change the directory to C:\kafka\bin\windows----->
+	.\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic demo --from-beginning
+
+6) Now, enjoy the messaging services between Producer and Consumer.
+
+
+##.For fetch messages from different producers in a single consumer--------> 
+	.\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --whitelist "demo|class2|test|trial2" --from-beginning
+
+
+###.For deleting the topic from the server------------->
+	.\bin\windows\kafka-topics.bat --delete --bootstrap-server localhost:9092 --topic demo
+
+
+####.For view the list of topics present in the kafka server-------------->
+	.\bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092
+

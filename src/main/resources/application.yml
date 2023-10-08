@@ -16,8 +16,8 @@ spring:
   mail:
     host: smtp-relay.sendinblue.com
     port: 587
-    username: jalajtechy12345@gmail.com
-    password: ENTER MAIL SENDER PASSWORD
+    username: ENTER USERNAME
+    password: ENTER PASSWORD
     protocol: smtp
     properties:
             mail:
@@ -26,5 +26,5 @@ spring:
               enable: true
     
 stripe:
-  apikey: ENTER SECRET API KEY
-  publickey: ENTER PUBLIC API KEY
+  apikey: ENTER YOUR SECRET KEY
+  publickey: ENTER YOUR PUBLIC KEY
